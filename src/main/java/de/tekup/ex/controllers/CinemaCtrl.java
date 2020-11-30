@@ -1,6 +1,8 @@
 package de.tekup.ex.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,14 @@ public class CinemaCtrl {
 	@GetMapping("/studio/{name}/movies")
 	public List<Movie> getMovies(@PathVariable("name")String studioName) {
 		return service.getColoredMoviesByStudio(studioName);
+	}
+	
+	@GetMapping("/stars/{dateBegin}/{dateEnd}")
+	public Map<Character, Long> getStarCounter(@PathVariable("dateBegin")String dBegin,
+			@PathVariable("dateEnd")String dEnd) {
+		LocalDate dateBegin = LocalDate.parse(dBegin);
+		LocalDate dateEnd = LocalDate.parse(dEnd);
+		return service.getMaleAndFemale(dateBegin, dateEnd);
 	}
 	
 	

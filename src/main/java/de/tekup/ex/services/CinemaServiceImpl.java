@@ -1,8 +1,11 @@
 package de.tekup.ex.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -53,5 +56,38 @@ public class CinemaServiceImpl implements CinemaService {
 					.filter(movie -> movie.getColor() == 1)
 					.collect(Collectors.toList());
 	}
+	
+	// Return number of Male Star and Female Star born between two given dates
+	
+	public Map<Character, Long> getMaleAndFemale(LocalDate dateBegin, LocalDate dateEnd) {
+		/*
+		List<Star> stars = reposStar.findAll();
+		int male = 0, female = 0;
+		for (Star star : stars) {
+			if(star.getDateBirth().isAfter(dateBegin) && star.getDateBirth().isBefore(dateEnd)) {
+				if(star.getGendre() == 'M') {
+					male++;
+				}else {
+					female++;
+				}
+			}
+		}
+		
+		Map<Character, Integer> map = new HashMap<>();
+		map.put('M', male);
+		map.put('F', female);
+		
+		return map;
+		
+		*/
+		
+		return reposStar.findAll()
+				.stream()
+				.filter(star ->star.getDateBirth().isAfter(dateBegin) && star.getDateBirth().isBefore(dateEnd))
+				.collect(Collectors.groupingBy(star -> star.getGendre(), Collectors.counting()));
+		
+	}
+	
+	
 
 }
